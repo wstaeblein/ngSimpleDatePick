@@ -65,8 +65,8 @@
 
         app.controller('mainController', function($scope) {
 
-            $scope.data1 = '12/12/2014';
-            $scope.data2 = '28/12/2014';
+            $scope.data1 = moment().add(-15, 'days').format('DD/MM/YYYY');
+            $scope.data2 = moment().format('DD/MM/YYYY');
             $scope.datadiv = '';
         });
 	</script>
