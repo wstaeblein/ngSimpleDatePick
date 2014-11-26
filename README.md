@@ -1,7 +1,15 @@
 ngSimpleDatePick
 ================
 
-A small angular date picker using JQuery and momentJS
+A small angular date picker using JQuery and momentJS.
+Supports min and max dates, so tha only dates in between those can be picked.
+Works on inputs with ngModel or on a &lt;div&gt;, &lt;span&gt; or any other tag.
+
+<pre>
+&lt;input type="text" ng-model="anydate" simple-date-pick /&gt;
+
+&lt;div simple-date-pick sdp-date="mydate" sdp-min="smallestdate" sdp-max="largestdate"&gt;{{ mydate }}&lt;/div&gt;
+</pre>
 
 
 Dependencies
@@ -11,6 +19,19 @@ Dependencies
 <li>JQuery (used v1.11.1)</li>
 <li>Moment.js (used v2.8.3)</li>
 </ul>
+
+Documentation
+-------------
+
+To use it, add attribute <b>simple-date-pick</b> to any tag. If your tag is an input ngModel can be used to store the picked date. Otherwise use attribute <b>sdp-date</b>. These attribute's values should be a property of your controller's scope, so that all changes are automatically processed on both ends (the directive and the controller).
+
+Other Attributes:
+
+<b>sdp-min & sdp-max</b>
+These should also be a property of your controller, so that these dates can change and be perceived by the ngSimpleDatePick directive.
+
+<b>format</b>
+This is a normal string attribute to set the date's format. Default is 'DD/MM/YYYY'.
 
 
 
