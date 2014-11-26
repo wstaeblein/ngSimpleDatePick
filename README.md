@@ -28,7 +28,7 @@ To use it, add attribute <b>simple-date-pick</b> to any tag. If your tag is an i
 Other Attributes:
 
 <b>sdp-min & sdp-max</b>
-These should also be a property of your controller, so that these dates can change and be perceived by the ngSimpleDatePick directive.
+These should also be a property of your controller, so that these dates can change and be perceived by the ngSimpleDatePick directive. You can use them both or separately meaning dates after or before a given date.
 
 <b>format</b>
 This is a normal string attribute to set the date's format. Default is 'DD/MM/YYYY'.
