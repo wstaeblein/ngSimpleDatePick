@@ -49,12 +49,12 @@ This is a normal string attribute to set the date's format. Default is 'DD/MM/YY
 Takes a function that will be called after a date is selected. The selected date will be passed to this function as a parameter.
 
 ```html
-<input type="text" ng-model="anydate" simple-date-pick sdp-on-date-selected="selDate" />
+<input type="text" ng-model="anydate" simple-date-pick sdp-on-date-selected="myChosenDate(seldate)" />
 ```
 Then on your controller:
 
 ```javascript
-$scope.selDate = function(selectedDate) {
+$scope.myChosenDate = function(selectedDate) {
 
 	// Do whatever with the date
 }
