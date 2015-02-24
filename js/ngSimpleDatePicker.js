@@ -39,7 +39,6 @@
                                 '<a href ng-click="setYear($event, -1)"><span class="datepick_arrowleft"></span></a>' +
                                 '<span class="titleYear">{{ actualDate.format("YYYY") }}</span>' +
                                 '<a href ng-click="setYear($event, 1)"><span class="datepick_arrowright"></span></a>' +
-                                '<span class=""><a href ng-click="">x</a></span>' +
                             '</div>' +
                             '<div class="datepick_body">' +
                                 '<table class="datepick_datecontainer" cellspacing="0" cellpadding="6">' +
