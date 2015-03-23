@@ -5,7 +5,7 @@ A small angular date picker using JQuery and momentJS.
 Supports min and max dates, so that only dates in between those can be picked.
 Works on inputs with ngModel as well as on a &lt;div&gt;, &lt;span&gt; or any other tag.
 
-
+Check out the <a href="http://rawgit.com/wstaeblein/ngSimpleDatePick/master/index.html" target="_blank">demo!</a>
 
 Dependencies
 ------------
