@@ -25,7 +25,7 @@
 
     <h2>ngSimpleDatePick Directive</h2>
 
-    <p>A small angular date picker using JQuery and momentJS. Supports min and max dates, so tha only dates in between those can be picked. Works on inputs with ngModel or on a &lt;div&gt;, &lt;span&gt; or any other tag.</p>
+    <p>A small angular date picker using JQuery and momentJS. Supports min and max dates, so tha only dates in between those can be picked. Works on text inputs with ngModel.</p>
 
 	<h3>Examples</h3>
 
@@ -41,11 +41,11 @@
 
         <p><b>Choose a date by clicking the box below</b></p>
         <p>Only dates between the 2 chosen above are allowed</p>
-        <div class="divdate" simple-date-pick sdp-date="datadiv" sdp-min="data1" sdp-max="data2">{{ datadiv }}</div>
+        <input type="text" ng-model="thedate" simple-date-pick sdp-min="data1" sdp-max="data2" />
 
         <br /><br /><br />
 
-        <div>The chosen date is {{ datadiv }}
+        <div>The chosen date is {{ thedate }}
     </div>
 </center>
 
@@ -67,7 +67,7 @@
 
             $scope.data1 = moment().add(-15, 'days').format('DD/MM/YYYY');
             $scope.data2 = moment().format('DD/MM/YYYY');
-            $scope.datadiv = '';
+            $scope.thedate = '';
         });
 	</script>
 </body>

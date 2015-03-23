@@ -1,7 +1,13 @@
 // =====================================================================
 // Simple Datepicker Directive
+// ---------------------------
 //
-// 
+// Directive for date picking on textboxes. Just drop a few attributes
+// and you're done!!
+//
+// Depends on JQuery 1.11+ and Moment.js 2.8.3+
+//
+// By Walter Staeblein .:. 2014 - 2015
 // =====================================================================
 (function() {
 
@@ -13,6 +19,7 @@
     sdp_app.directive('simpleDatePick', ['$compile', '$document', function($compile, $document) {
         return {
             restrict: 'A',
+            require: 'ngModel',
             scope: {
                 model: '=ngModel',
                 chosendate: '=sdpDate',
@@ -43,17 +50,31 @@
                                     '<tbody>' +
                                         '<tr ng-repeat="wk in monthObj.dates">' +
                                             '<td ng-repeat="cell in wk" ng-click="setDate($event, cell)" ' +
-                                            'ng-class="{ datepick_outdatecell: cell.outofmonth, datepick_disabled: cell.disabled, ' + 
+                                            'ng-class="{ datepick_outdatecell: cell.outofmonth, datepick_disabled: cell.disabled, ' +
                                             'datepick_today: cell.today, datepick_initial: cell.initial }">{{ cell.day }}</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
                             '</div>' +
-                            '<div class="datepick_footer">' +
+                            '<div class="datepick_footer" ng-show="showFooter">' +
+                            '<div><a href ng-click="setDate($event, today)">Today</a></div>' +
+                            '<div><a href ng-click="clearDate();" ng-show="model">Clear</a></div>' +
                             '</div>' +
                         '</div>';
 
-                return function($scope, element, attr) {
+                return function($scope, element, attr, ngModel) {
+
+                    ngModel.$parsers.push(function(value) {
+
+                        var format = attr.sdpFormat || 'DD/MM/YYYY';
+
+                        if (moment(value).isValid() == true) {
+                            return moment(value).format(format);
+                        } else {
+                            return value;
+                        }
+
+                    });
 
                     sdp_id++;
                     uid = "sdp_id" + sdp_id;
@@ -62,9 +83,13 @@
 
                     var format = attr.sdpFormat || 'DD/MM/YYYY';
 
+                    $scope.showFooter = attr.footer == undefined ? true : (attr.footer != '');
+                    $scope.today = { disabled: false, date: moment() };
+
+
                     $scope.actualDate = moment($scope.model || $scope.chosendate, format);
                     if ($scope.actualDate.isValid() == false) { $scope.actualDate = moment(); }
-                    
+
                     // Compile the html, link it to our scope and append the result to the page's body
                     var linkFn = $compile(txt);
                     var content = linkFn($scope);
@@ -90,7 +115,7 @@
                             $('.datepick:not(' + uid + ')').hide();
 
                             $(uid).fadeIn(400).css({ 'top': top, 'left': left });
-                            evt.preventDefault();                            
+                            evt.preventDefault();
                         })
 
                         return false;
@@ -98,6 +123,13 @@
 
                     // Dismisses the date picker box when the user clicks somewhere else
                     $document.on('click', function($event) { goAway(400); });
+
+
+                    $scope.clearDate = function() {
+
+                        $scope.model = '';
+                        goAway(400);
+                    }
 
                     // Answers a year navigation click
                     $scope.setYear = function(e, val) {
@@ -129,7 +161,7 @@
 
                                 if ($scope.ondateselected) {
 
-                                    $scope.ondateselected({ date: cell.date.format(format) });
+                                    $scope.ondateselected({ seldate: cell.date.format(format) });
                                 }
                             });
                             goAway(400);
@@ -157,7 +189,7 @@
                     var lines = [];
                     var wdn = [];
                     var tmp = counter.clone();
-                    var idate = ''; 
+                    var idate = '';
                     if (inidate != undefined) { idate = inidate.format(isofmt); }
 
                     for (var i = 0; i < 7; i++) {
@@ -184,6 +216,7 @@
                             if (min || max) {
                                 var adate = counter.format(isofmt);
                                 dis = !(adate >= mindate.format(isofmt) && adate <= maxdate.format(isofmt));
+                                console.log(adate + ' ==> ' + mindate.format(isofmt));
                             }
 
                             var ctrfmt = counter.format(isofmt);
