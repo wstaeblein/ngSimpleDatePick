@@ -2,14 +2,9 @@ ngSimpleDatePick
 ================
 
 A small angular date picker using JQuery and momentJS.
-Supports min and max dates, so tha only dates in between those can be picked.
-Works on inputs with ngModel or on a &lt;div&gt;, &lt;span&gt; or any other tag.
+Supports min and max dates, so that only dates in between those can be picked.
+Works on inputs with ngModel as well as on a &lt;div&gt;, &lt;span&gt; or any other tag.
 
-<pre>
-&lt;input type="text" ng-model="anydate" simple-date-pick /&gt;
-
-&lt;div simple-date-pick sdp-date="mydate" sdp-min="smallestdate" sdp-max="largestdate"&gt;{{ mydate }}&lt;/div&gt;
-</pre>
 
 
 Dependencies
@@ -20,12 +15,29 @@ Dependencies
 <li>Moment.js (used v2.8.3)</li>
 </ul>
 
+
+Installation
+------------
+
+Make sure you have Angular, JQuery and MomentJS in your project, then just add:
+
+```html
+<script src="js/ngSimpleDatePicker.js" type="text/javascript"></script>
+```
+
+
 Documentation
 -------------
 
 To use it, add attribute <b>simple-date-pick</b> to any tag. If your tag is an input ngModel can be used to store the picked date. Otherwise use attribute <b>sdp-date</b>. These attribute's values should be a property of your controller's scope, so that all changes are automatically processed on both ends (the directive and the controller).
 
-Other Attributes:
+```html
+<input type="text" ng-model="anydate" simple-date-pick />
+
+<div simple-date-pick sdp-date="mydate" sdp-min="smallestdate" sdp-max="largestdate">{{ mydate }}</div>
+```
+
+<h4>Other Attributes:</h4>
 
 <b>sdp-min & sdp-max</b>
 These should also be a property of your controller, so that these dates can change and be perceived by the ngSimpleDatePick directive. You can use them both or separately meaning dates after or before a given date.
@@ -33,6 +45,20 @@ These should also be a property of your controller, so that these dates can chan
 <b>format</b>
 This is a normal string attribute to set the date's format. Default is 'DD/MM/YYYY'.
 
+<b>on-date-selected</b>
+Takes a function that will be called after a date is selected. The selected date will be passed to this function as a parameter.
+
+```html
+<input type="text" ng-model="anydate" simple-date-pick sdp-on-date-selected="myChosenDate(seldate)" />
+```
+Then on your controller:
+
+```javascript
+$scope.myChosenDate = function(selectedDate) {
+
+	// Do whatever with the date
+}
+```
 
 
 Licence
