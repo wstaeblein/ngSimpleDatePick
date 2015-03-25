@@ -33,8 +33,6 @@ To use it, add attribute <b>simple-date-pick</b> to any tag. If your tag is an i
 
 ```html
 <input type="text" ng-model="anydate" simple-date-pick />
-
-<div simple-date-pick sdp-date="mydate" sdp-min="smallestdate" sdp-max="largestdate">{{ mydate }}</div>
 ```
 
 <h4>Other Attributes:</h4>
