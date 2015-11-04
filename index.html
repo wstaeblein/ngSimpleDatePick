@@ -33,31 +33,33 @@
 
     <div style="margin: 50px">
 
-        Min date: <input type="text" ng-model="data1" simple-date-pick />
+        Min date: <input type="text" ng-model="data1" simple-date-pick sdp-output-format="DD/MM/YYYY" />
 
         <br /><br /><br />
 
-        Max date: <input type="text" ng-model="data2" simple-date-pick />
+        Max date: <input type="text" ng-model="data2" simple-date-pick sdp-output-format="DD/MM/YYYY" />
 
         <br /><br /><br />
 
         <p><b>Choose a date by clicking the box below</b></p>
         <p>Only dates between the 2 chosen above are allowed</p>
-        <input type="text" ng-model="thedate" simple-date-pick sdp-min="data1" sdp-max="data2" sdp-pick-time="false" sdp-language="es" />
+        <input type="text" ng-model="thedate" simple-date-pick sdp-min="data1" sdp-max="data2" sdp-pick-time="true" sdp-language="es" />
 
         <br /><br /><br />
 
         <div>The chosen date is {{ thedate }}
     </div>
+
+	<div ng-repeat="d in dates">
+		<input type="text" ng-model="d.d1" simple-date-pick sdp-min="data1" sdp-max="data2" sdp-pick-time="true" sdp-output-format="DD/MM/YYYY" sdp-language="pt" />
+        <br /><br />
+	</div>
 </center>
 
 
 
 <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
 <script src="js/angular.min.js" type="text/javascript"></script>
-<script src="js/moment.min.js" type="text/javascript"></script>
-<!--<script src="js/pt-br.js" type="text/javascript"></script>-->
-
 <script src="js/ngSimpleDatePicker.js" type="text/javascript"></script>
 
 
@@ -68,11 +70,36 @@
 
         app.controller('mainController', function($scope) {
 
-            $scope.data1 = moment().add(-15, 'days').format('DD/MM/YYYY');
-            $scope.data2 = moment().format('DD/MM/YYYY');
+            $scope.data1 = new shortDate().addDays(-17).format('DD/MM/YYYY');
+            $scope.data2 = new shortDate().addDays(10);
             $scope.thedate = '';
+
+            $scope.dates = [
+            	{ d1: '' },
+            	{ d1: '2015-12-11' },
+            	{ d1: '' }
+            ]
         });
 
+
+        var d = new shortDate('2015-10-15 09:12:13.450PM');
+        var d2 = new shortDate('11/25/2001', 'MDY');
+        var dmin = new shortDate('min');
+        var dmax = new shortDate('max');
+
+
+        /*console.log(d.toDate());
+        console.log(d2.toDate());
+        console.log(dmin.toDate());
+        console.log(dmax.toDate());
+
+        console.log(d.format('DD/MM/YYYY HH:mmA'));
+        console.log('Mes/Dia: ' + d2.format('DD/MM/YYYY'));
+        console.log(d.removeTime().format('DD/MM/YYYY HH:mmA'));
+        console.log(d.addDays(33).format('DD/MM/YYYY HH:mmA'));
+
+        console.log(new shortDate(new Date()).format('DD/MM/YYYY HH:mm:ssA'))
+        */
 	</script>
 </body>
 </html>
