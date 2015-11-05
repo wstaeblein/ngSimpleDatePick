@@ -28,9 +28,9 @@
             compile: function(element, attributes) {
                 var defFormat = 'YYYY-MM-DD';
                 var translations = {
-                    pt: { clear: 'Apagar', today: 'Hoje', back: 'Voltar', time: 'Tempo', months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], weekdays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'] },
-                    en: { clear: 'Clear', today: 'Today', back: 'Back', time: 'Time', months: ['January', 'February', 'Mars', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
-                    es: { clear: 'Borrar', today: 'Hoy', back: 'Volver', time: 'Tiempo', months: ['Eneiro', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'], weekdays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'] }
+                    pt: { clear: 'Apagar', today: 'Hoje', back: 'Voltar', time: 'Tempo', reset: 'Zerar', ok: 'Ok', months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], weekdays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'] },
+                    en: { clear: 'Clear', today: 'Today', back: 'Back', time: 'Time', reset: 'Reset', ok: 'Ok', months: ['January', 'February', 'Mars', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+                    es: { clear: 'Borrar', today: 'Hoy', back: 'Volver', time: 'Tiempo', reset: 'Reajustar', ok: 'Ok', months: ['Eneiro', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'], weekdays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'] }
                 };
                 var txt = ' <div class="datepick" ng-click="$event.stopPropagation()" ng-blur="disappear()" ng-cloak>' +
                     '<div class="datepick_header">' +
@@ -47,14 +47,14 @@
                     '<div class="datepick_content_container">' +
                     '<div class="datepick_body">' +
                     '<div class="sdp_anoscontainer">' +
-                    '<div style="float: left; margin-top: 14px; margin-left: 8px"><a href ng-click="makeYears(-1)"><span class="datepick_arrowleftlist"></span></a></div>' +
-                    '<div style="float: right; margin-top: 14px; margin-right: 8px"><a href ng-click="makeYears(1)"><span class="datepick_arrowrightlist"></span></a></div>' +
+                    '<div style="float: left; margin-top: 25px; margin-left: 8px"><a href ng-click="makeYears(-1)"><span class="datepick_arrowleftlist"></span></a></div>' +
+                    '<div style="float: right; margin-top: 25px; margin-right: 8px"><a href ng-click="makeYears(1)"><span class="datepick_arrowrightlist"></span></a></div>' +
                     '<div class="yearlistcontainer">' +
                     '<div class="sdp_years" ng-class="{ sdp_sel: y == actualDate.year() }" ng-click="setYear($event, y)" ng-repeat="y in yearsBelow track by $index">{{ y }}</div>' +
                     '<br />' +
                     '<div class="sdp_years" ng-class="{ sdp_sel: y == actualDate.year() }" ng-click="setYear($event, y)" ng-repeat="y in yearsAbove track by $index">{{ y }}</div>' +
                     '</div>' +
-                    '<div style="margin: 15px 0">' +
+                    '<div style="margin: 10px 0">' +
                     '<div class="sdp_months" ng-class="{ sdp_sel: $index == actualDate.month() }" ng-click="setMonthStraight($event, $index)" ng-repeat="m in translation.months track by $index">{{ m | uppercase }}</div>' +
                     '</div>' +
                     '</div>' +
@@ -66,22 +66,23 @@
                     '<td ng-repeat="dname in translation.weekdays">{{ dname }}</td>' +
                     '</tr>' +
                     '</thead>' +
+                    '<thead><tr><td colspan="7" style="padding: 2px; border: none"></td></tr></thead>' +
                     '<tbody>' +
                     '<tr ng-repeat="wk in monthObj.dates">' +
                     '<td ng-repeat="cell in wk" ng-click="setDate($event, cell)" ' +
                     'ng-class="{ datepick_outdatecell: cell.outofmonth, datepick_disabled: cell.disabled, ' +
-                    'datepick_today: cell.today, datepick_initial: cell.initial }">{{ cell.day }}</td>' +
+                    'datepick_today: cell.today, datepick_initial: cell.initial }"><div>{{ cell.day }}</div></td>' +
                     '</tr>' +
                     '</tbody>' +
                     '</table>' +
                     '</div>' +
                     '<div class="datepick_body">' +
                     '<div class="timecontainer">' +
-                    '<div style="margin: 10px;">' +
+                    '<div style="margin: 5px;">' +
                     '<div class="timecell" ng-click="setTime(0, h)" ng-repeat="h in hours track by $index" ng-class="{ sdp_sel: h == hour }">{{ h }}</div>' +
                     '</div>' +
                     '<div style="margin: 10px;">' +
-                    '<div style="margin: 20px;">' +
+                    '<div style="margin: 15px;">' +
                     '<div class="timecell" ng-click="setTime(1, 0)" ng-class="{ sdp_sel: 0 == minuteD }">0</div>' +
                     '<div class="timecell" ng-click="setTime(1, 1)" ng-class="{ sdp_sel: 1 == minuteD }">10</div>' +
                     '<div class="timecell" ng-click="setTime(1, 2)" ng-class="{ sdp_sel: 2 == minuteD }">20</div>' +
@@ -104,14 +105,16 @@
                     '</div>' +
                     '</div>' +
                     '<br />' +
-                    '<div class="timeshowtime">{{ time}}</div>' +
+                    '<div class="timeshowtime">{{ time }}</div>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="datepick_footer">' +
-                    '<div class="btntoday" ng-show="checkToday()"><a href ng-click="setDate($event, today)">{{ ::translation.today }}</a></div>' +
-                    '<div class="btnclear"><a href ng-click="clearDate();" ng-class="{ invis: !model }">{{ ::translation.clear }}</a></div>' +
-                    '<div class="btntime" ng-show="mode"><a href ng-click="mode = 0">{{ ::translation.back }}</a></div>'
+                    '<div class="btnleft"><a href ng-show="checkToday()" ng-click="setDate($event, today)">{{ ::translation.today }}</a>' +
+                    '<a href ng-show="mode != 1" ng-click="setDate($event, { disabled: false, default: true })">{{ ::translation.ok }}</a></div>' +
+                    '<div class="btnright"><a href ng-click="clearDate();" ng-show="model && mode == 1">{{ ::translation.clear }}</a>' +
+                    '<a href ng-show="mode != 1" ng-click="showModule(1)">{{ ::translation.back }}</a></div>' +
+                    '<div class="btncenter"><a href ng-click="setTime(-1);" ng-show="mode == 2">{{ ::translation.reset }}</a></div>'
                 '</div>' +
                 '</div>';
 
@@ -125,7 +128,7 @@
                     element.attr('readonly', true);
                     $scope.translation = translations[$scope.language || 'pt'];                     // Directive messages
                     $scope.pickTime = (attrs.sdpPickTime == "true" || attrs.sdpPickTime == "1");    // If the picker has to pick times as well
-                    $scope.mode = 0;                                                                // 0 = date / Day, 1 = time, 2 = Month / Year
+                    $scope.mode = 1;                                                                // 0 = date / Day, 1 = time, 2 = Month / Year
                     $scope.today = { disabled: false, date: new shortDate() };
                     $scope.hours = makeHours(attrs.timeformat || '24');                             // Hours picking
 
@@ -136,6 +139,7 @@
                     var actdt;
                     if ($scope.model) {
                         actdt = new shortDate($scope.model, inputFormat);
+                        
                         if (actdt.isValid() == false) {
                             actdt = new shortDate();
                             $scope.model = '';
@@ -175,7 +179,7 @@
 
                         if ($scope.min.toDate() > t) { return false; }
                         if ($scope.max.toDate() < t) { return false; }
-                        return true;
+                        return ($scope.mode == 1);
                     }
 
                     $scope.showModule = function(mod) {
@@ -189,11 +193,17 @@
                             offObj.show(360, function() {
                                 offObj.addClass('ison');
                             }); 
+                            $scope.mode = mod;
                         }                   
                     }
 
                     $scope.setTime = function(t, num) {
                         switch(t) {
+                            case -1: 
+                                $scope.hour = 0;
+                                $scope.minuteD = 0;
+                                $scope.minuteU = 0;
+                                break;
                             case 0:
                                 if (num.indexOf('p') > -1) {
                                     num = parseInt(num.replace('p', '')) + 12;
@@ -203,16 +213,15 @@
                             case 1: $scope.minuteD = num; break;
                             case 2: $scope.minuteU = num; break;
                         }
-                        //var t = $scope.time();
-
                         $scope.actualDate.setTime($scope.hour, ($scope.minuteD * 10 + $scope.minuteU), 0);
                         $scope.time = $scope.actualDate.format(attrs.timeformat == '12' ? ' hh:mmA' : ' HH:mm');
                     }
 
                     $scope.disappear = function() {
-                        goAway();
-                        $scope.mode = 0;
-                        showModule(1);
+                        $('.datepick').fadeOut(400);
+                        setTimeout(function() { $scope.showModule(1); }, 500);
+                        $scope.mode = 1;
+                        $scope.setTime(-1);
                     }
 
                     // Compile the html, link it to our scope and append the result to the page's body
@@ -223,15 +232,15 @@
                     var offsets = attrs.offsets ? attrs.offsets.split(',') : [0,0];
 
                     // ---------------------------------------------
-                    // Answers the original div or input click event
+                    // Answers the original input click event
                     // ---------------------------------------------
                     element.on('click', function(evt) {
                         $scope.checkMinMax();
                         $scope.hour = 0;
                         $scope.minuteU = 0;
                         $scope.minuteD = 0;
-                        //$scope.empty = ($scope.model == '' || $scope.model == null || $scope.model == undefined ? true : false);
-
+                        
+                        if (!$scope.model) { $scope.actualDate.setTime(0, 0, 0); }
                         $scope.initialDate = new shortDate($scope.actualDate);       // Data na caixa ou a data de hoje
                         $scope.initialDate.day(1);
 
@@ -248,13 +257,14 @@
                                     $scope.hour = parseInt(aaa[0]);
                                     $scope.minuteD = Math.floor(parseInt(aaa[1]) / 10);
                                     $scope.minuteU = parseInt(aaa[1]) % 10;
+                                    $scope.setTime(3);
                                 }
                             }
                         }
 
                         // Apply the changes in the current month and render the calendar
                         $scope.$apply(function() {
-                            $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model);
+                            $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model, inputFormat);
 
                             positionBox(element, offsets);
                             evt.preventDefault();
@@ -267,12 +277,15 @@
                     };
 
                     // Dismisses the date picker box when the user clicks somewhere else
-                    $document.on('click', function($event) { goAway(400); $scope.mode = 0; });
+                    $document.on('click', function($event) { 
+                        $scope.disappear();
+                    });
 
                     $scope.clearDate = function() {
                         $scope.model = '';
                         $scope.actualDate = new shortDate();
-                        goAway(400);
+                        $scope.setTime(-1);
+                        $scope.disappear();
                     }
 
                     // Answers a year navigation click
@@ -285,7 +298,7 @@
                         }
                         $scope.initialDate = $scope.actualDate.clone();
                         $scope.initialDate.day(1);
-                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model);
+                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model, inputFormat);
                     }
 
                     // Answers a month navigation click
@@ -298,14 +311,14 @@
                         }
                         $scope.initialDate = new shortDate($scope.actualDate);
                         $scope.initialDate.day(1);
-                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model);
+                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model, inputFormat);
                     }
 
                     $scope.setMonthStraight = function(e, val) {
                         $scope.actualDate.month(val);
                         $scope.initialDate = new shortDate($scope.actualDate);
                         $scope.initialDate.day(1);
-                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model);
+                        $scope.monthObj = renderMonth($scope.min, $scope.max, $scope.initialDate, $scope.model, inputFormat);
                     }
 
                     // Answers a date cell click
@@ -321,17 +334,18 @@
                                 if ($scope.ondateselected) {
                                     $scope.ondateselected({ seldate: $scope.model });
                                 }
+                                $scope.disappear();
                             });
-                            $scope.mode = 0;
-                            goAway(400);
                         }
                     }
 
                     // Seta a data e a hora escolhidas
                     $scope.composeChosenDate = function(cell) {
-                        var dt = cell.date;
+                        var dt = (cell.default ? $scope.actualDate : cell.date).clone();                  // default is used with the Ok button to choose whatever is selected as a date
                         if ($scope.pickTime) {
                             dt.setTime($scope.hour, ($scope.minuteD * 10 + $scope.minuteU), 0);
+                            console.log(dt.toDate());
+                            console.log($scope.time);
                         }
                         return dt;
                     }
@@ -362,11 +376,6 @@
                     ele.next().fadeIn(400).css({ 'top': top, 'left': left });
                 }
 
-                // Dismisses the date picker box
-                function goAway(speed) {
-                    $('.datepick').fadeOut(speed);
-                }
-
                 function makeHours(fmt) {
                     var resp = [];
                     for (var i = 0; i < 24; i++) {
@@ -382,12 +391,12 @@
                 // Renders a month of a year passed in dt.
                 // min and max determines which cells can be selected
                 // inidate is the date at the box when it was clicked
-                // actdate is the actual choice made (will be current date if empty)
-                // Empty signals that the date box is empty
-                function renderMonth(min, max, inidate, model) { 
+                // model is the content of the ngmodel property
+                // inpFmt is the input format being used
+                function renderMonth(min, max, inidate, model, inpFmt) { 
                     var m = inidate.month(), y = inidate.year();
                     var counter = new shortDate(inidate.addDays(-inidate.weekday())).setTime(0, 0, 0);      // Posiciona no primeiro dia da semana
-                    var modelDate = new shortDate(model ? model : 'min').setTime(0, 0, 0);
+                    var modelDate = (model ? new shortDate(model, inpFmt) : new shortDate('min')).setTime(0, 0, 0);
 
                     var dateObj = {};
                     var lines = [];
@@ -398,14 +407,13 @@
                         var line = [];
                         for (var c = 0; c < 7; c++) {
                             var dis = (counter.toDate() < min.toDate() || counter.toDate() > max.toDate());
-                            var obj = { date: counter.clone(),
-                                day: counter.day(),
-                                outofmonth: (counter.month() != m),
-                                disabled: dis,
-                                today: counter.isToday(),
-                                initial: (modelDate.compare(counter) == 0)
+                            var obj = { date: counter.clone(),                      // Full date for this cell
+                                day: counter.day(),                                 // Day of the month
+                                outofmonth: (counter.month() != m),                 // If this date belongs to the current month
+                                disabled: dis,                                      // If this date is disabled
+                                today: counter.isToday(),                           // Indicates the current date
+                                initial: (modelDate.compare(counter) == 0)          // Indicates the chosen date (if any)
                             };
-    console.log(modelDate.compare(counter) + ' -- ' + modelDate.toDate())
                             line.push(obj);
                             counter.addDays(1);
                         }

@@ -1,12 +1,13 @@
 .datepick {
     position: absolute;
     min-width: 150px;
-    min-height: 260px;
+    min-height: 230px;
     display: none;
     font: normal 12px tahoma;
     color: black;
     z-index: 9999;
     border-color: dodgerblue;
+    background-color: #FFF;
 }
 
 .datepick_header {
@@ -105,7 +106,7 @@
 .datepick_content_container {
     width: 320px;
     border: 1px solid dodgerblue;
-    height: 260px;
+    height: 230px;
     overflow: hidden;
 }
 
@@ -120,7 +121,7 @@
     text-align: center;
 }
 
-    .datepick_footer div.btntoday
+    .datepick_footer div.btnleft
     {
         float: left;
     }
@@ -137,16 +138,16 @@
         
         .datepick_footer div a:hover
         {
-            background: crimson;
+            background: orangered;
             color: White;
         }
     
-    .datepick_footer div.btnclear
+    .datepick_footer div.btnright
     {
         float: right;
     }
     
-    .datepick_footer div.btntime {
+    .datepick_footer div.btncenter {
         margin: 0 auto;
     }
 
@@ -230,7 +231,7 @@
     background-color: white;
     cursor: pointer;
     color: dodgerblue;
-    padding: 12px 0;
+    padding: 9px 0;
 }
 
 .datepick_datecontainer tbody tr td.datepick_outdatecell {
@@ -261,8 +262,8 @@
 }
 .datepick_today {
     font-weight: bold;
-    color: crimson;
-    border: 1px solid crimson;
+    color: orangered;
+    border: 1px solid orangered;
 }
 
 .datepick_initial {
@@ -295,7 +296,7 @@
 }
     .timecell:hover {
         color: white;
-        background-color: crimson;
+        background-color: orangered;
         border-radius: 4px;
     }
 
@@ -331,7 +332,7 @@
 }
     .sdp_years:hover {
         color: white;
-        background-color: crimson;
+        background-color: orangered;
         border-radius: 4px;
     }
 
@@ -347,11 +348,11 @@
 }
     .sdp_months:hover {
         color: white;
-        background-color: crimson;
+        background-color: orangered;
         border-radius: 4px;
     }
 
 .yearlistcontainer {
-    padding: 15px 0 20px 0;
+    padding: 10px 0 15px 0;
     border-bottom: 1px solid dodgerblue;
 }
